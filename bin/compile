@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Default enviroment variables
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+indent() { sed '/^$/d' | sed 's/^/       /' ; }
+
+PYPY_CHOICE=$(cat $BUILD_DIR/pypy-runtime.txt)
+BASE="${PYPY_CHOICE}-linux64"
+FILENAME="${BASE}.tar.bz2"
+URL="https://downloads.python.org/pypy/${FILENAME}"
+wget -P $CACHE_DIR -N $URL 2>&1 | indent
+tar xf ${CACHE_DIR}/${FILENAME}
+PYPY_EXE="./${BASE}/bin/pypy"
+$PYPY_EXE --version | indent
+mkdir -p .profile.d
+echo "export PYPY_EXECUTABLE=\$(realpath $PYPY_EXE)" > .profile.d/pypy_exe_path.sh
+chmod +x .profile.d/pypy_exe_path.sh
+echo "pypy installed successfully to $PYPY_EXE" | indent

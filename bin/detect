@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Detect if the buildpack can be used: Always true.
+# If so (and it is so), report a "framework" name.
+# See more at https://devcenter.heroku.com/articles/buildpack-api
+
+echo "PyPy-side"
+
