@@ -10,7 +10,9 @@ to it when the app is run.
 
 ## Usage
 
-Just include the buildpack in your `app.json`
+Besides including the buildpack, add to the root folder of your repo
+a file named `pypy-runtime.txt` with the name of the pypy version you
+want to run. E.g. `pypy3.8-v7.3.7`
 
 ### Inspiration
 
