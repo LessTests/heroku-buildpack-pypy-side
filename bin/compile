@@ -13,11 +13,13 @@ PYPY_CHOICE=$(cat $BUILD_DIR/pypy-runtime.txt)
 BASE="${PYPY_CHOICE}-linux64"
 FILENAME="${BASE}.tar.bz2"
 URL="https://downloads.python.org/pypy/${FILENAME}"
+PROFILE_PATH=".profile.d/pypy_exe_path.sh"
 wget -P $CACHE_DIR -N $URL 2>&1 | indent
+cd "${BUILD_DIR}"
 tar xf ${CACHE_DIR}/${FILENAME}
 PYPY_EXE="./${BASE}/bin/pypy"
 $PYPY_EXE --version | indent
 mkdir -p .profile.d
-echo "export PYPY_EXECUTABLE=\$(realpath $PYPY_EXE)" > .profile.d/pypy_exe_path.sh
-chmod +x .profile.d/pypy_exe_path.sh
+echo "export PYPY_EXECUTABLE=\$(realpath $PYPY_EXE)" > "${PROFILE_PATH}"
+chmod +x "${PROFILE_PATH}"
 echo "pypy installed successfully to $PYPY_EXE" | indent
